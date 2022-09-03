@@ -1,14 +1,13 @@
 /*
  * @Description: ^_^
  * @Author: sharebravery
- * @Date: 2022-08-29 19:57:37
+ * @Date: 2022-09-03 13:13:52
  */
+import { Module } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
-import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [],
   controllers: [AccountController],
   providers: [AccountService],
 })
