@@ -5,7 +5,6 @@
  */
 import { Prop, Schema } from '@nestjs/mongoose';
 
-@Schema()
 export class AuditMetadata {
   @Prop({ timestamps: true })
   createDate: Date;

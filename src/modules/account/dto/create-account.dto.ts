@@ -5,6 +5,7 @@
  */
 import { Prop, Schema } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 @Schema()
 export class CreateAccountDto {
@@ -16,6 +17,7 @@ export class CreateAccountDto {
     required: true,
   })
   @Prop({ required: true })
+  @IsNotEmpty({ message: 'username 不允许为空' })
   username: string;
 
   @ApiProperty({
@@ -25,6 +27,7 @@ export class CreateAccountDto {
     example: '123456',
     required: true,
   })
+  @IsNotEmpty({ message: 'password 不允许为空' })
   @Prop({ required: true })
   password: string;
 }

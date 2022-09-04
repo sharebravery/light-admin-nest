@@ -29,27 +29,30 @@ export class AccountController {
 
   @ApiOperation({ summary: '创建账号' })
   @ApiOkResponse({ description: '创建账号', type: CreateAccountDto })
-  @ApiResponse({ status: 401, description: '权限不足' })
   @Post()
   create(@Body() createAccountDto: CreateAccountDto) {
     return this.accountService.create(createAccountDto);
   }
 
+  @ApiOperation({ summary: 'findAll' })
   @Get()
   findAll() {
     return this.accountService.findAll();
   }
 
+  @ApiOperation({ summary: '根据id查找账号' })
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.accountService.findOne(+id);
   }
 
+  @ApiOperation({ summary: '更新账号' })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
     return this.accountService.update(+id, updateAccountDto);
   }
 
+  @ApiOperation({ summary: '删除账号' })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.accountService.remove(+id);

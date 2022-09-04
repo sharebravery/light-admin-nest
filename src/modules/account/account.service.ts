@@ -1,15 +1,29 @@
+/*
+ * @Description: ^_^
+ * @Author: sharebravery
+ * @Date: 2022-09-03 13:13:52
+ */
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { Account } from './entities/account.entity';
 
 @Injectable()
 export class AccountService {
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account' + createAccountDto.username;
+  constructor(
+    @InjectModel(Account.name)
+    private accountModel: Model<Account>,
+  ) {}
+
+  async create(createAccountDto: CreateAccountDto) {
+    const createUser = new this.accountModel(createAccountDto);
+    return await createUser.save();
   }
 
-  findAll() {
-    return `This action returns all account`;
+  async findAll(): Promise<Account[]> {
+    return this.accountModel.find().exec();
   }
 
   findOne(id: number) {

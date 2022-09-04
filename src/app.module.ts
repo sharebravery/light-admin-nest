@@ -8,13 +8,24 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './modules/user/user.module';
+import mongoose from 'mongoose';
 
 @Module({
   imports: [
     AccountModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/soft'),
+    UserModule,
+    MongooseModule.forRoot(
+      'mongodb://admin:123456@localhost:27017/soft?authSource=admin',
+    ),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('connected');
+});

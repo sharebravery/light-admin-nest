@@ -6,8 +6,15 @@
 import { Module } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
+import { Account, AccountSchema } from './entities/account.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+
+const AccountTable = MongooseModule.forFeature([
+  { name: Account.name, schema: AccountSchema },
+]);
 
 @Module({
+  imports: [AccountTable],
   controllers: [AccountController],
   providers: [AccountService],
 })

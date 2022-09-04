@@ -9,15 +9,4 @@ import { AppService } from './app.service';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  /**
-   *
-   *
-   * @return {*}  {string}
-   * @memberof AppController
-   */
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 }
