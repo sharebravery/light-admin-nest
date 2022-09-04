@@ -6,11 +6,11 @@
 import { Module } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
-import { Account, AccountSchema } from './entities/account.entity';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LoginModel, LoginSchema } from './entities/loginModel';
 
 const AccountTable = MongooseModule.forFeature([
-  { name: Account.name, schema: AccountSchema },
+  { name: LoginModel.name, schema: LoginSchema },
 ]);
 
 @Module({

@@ -19,42 +19,52 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AccountService } from './account.service';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
 
 @ApiTags('AccountController')
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
-  @ApiOperation({ summary: '创建账号' })
-  @ApiOkResponse({ description: '创建账号', type: CreateAccountDto })
-  @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountService.create(createAccountDto);
+  @ApiOperation({ summary: '登录' })
+  @Post('SignedIn')
+  SignedIn() {
+    return true;
   }
 
-  @ApiOperation({ summary: 'findAll' })
-  @Get()
-  findAll() {
-    return this.accountService.findAll();
+  @ApiOperation({ summary: '获取登录账户信息' })
+  @Get('Me')
+  Me() {
+    return true;
   }
 
-  @ApiOperation({ summary: '根据id查找账号' })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountService.findOne(+id);
-  }
+  // @ApiOperation({ summary: '创建账号' })
+  // @ApiOkResponse({ description: '创建账号', type: CreateAccountDto })
+  // @Post()
+  // create(@Body() createAccountDto: CreateAccountDto) {
+  //   return this.accountService.create(createAccountDto);
+  // }
 
-  @ApiOperation({ summary: '更新账号' })
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountService.update(+id, updateAccountDto);
-  }
+  // @ApiOperation({ summary: 'findAll' })
+  // @Get()
+  // findAll() {
+  //   return this.accountService.findAll();
+  // }
 
-  @ApiOperation({ summary: '删除账号' })
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.accountService.remove(+id);
-  }
+  // @ApiOperation({ summary: '根据id查找账号' })
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.accountService.findOne(+id);
+  // }
+
+  // @ApiOperation({ summary: '更新账号' })
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
+  //   return this.accountService.update(+id, updateAccountDto);
+  // }
+
+  // @ApiOperation({ summary: '删除账号' })
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.accountService.remove(+id);
+  // }
 }

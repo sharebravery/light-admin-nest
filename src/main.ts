@@ -7,11 +7,23 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api'); // 设置全局路由前缀
+  // 全局路由前缀
+  app.setGlobalPrefix('api');
+
+  // 全局错误的过滤器
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // 全局统一返回值的拦截器
+  app.useGlobalInterceptors(new TransformInterceptor());
+
+  // 全局数据监测校验管道
+  app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
     .setTitle('软考API')
@@ -26,8 +38,6 @@ async function bootstrap() {
   console.log('====================================');
   console.log('start at:' + 'http://localhost:3000/api');
   console.log('====================================');
-
-  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 }

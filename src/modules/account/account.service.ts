@@ -3,27 +3,27 @@
  * @Author: sharebravery
  * @Date: 2022-09-03 13:13:52
  */
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
-import { Account } from './entities/account.entity';
+import { LoginModel } from './entities/loginModel';
 
 @Injectable()
 export class AccountService {
   constructor(
-    @InjectModel(Account.name)
-    private accountModel: Model<Account>,
+    @InjectModel(LoginModel.name)
+    private loginModel: Model<LoginModel>,
   ) {}
 
   async create(createAccountDto: CreateAccountDto) {
-    const createUser = new this.accountModel(createAccountDto);
+    const createUser = new this.loginModel(createAccountDto);
     return await createUser.save();
   }
 
-  async findAll(): Promise<Account[]> {
-    return this.accountModel.find().exec();
+  async findAll() {
+    return this.loginModel.find().exec();
   }
 
   findOne(id: number) {
