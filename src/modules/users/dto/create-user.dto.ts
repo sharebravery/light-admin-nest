@@ -81,4 +81,23 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '角色', example: ['admin'], required: false })
   roles: Array<any>;
+
+  @ApiProperty({
+    description: '锁定',
+    example: true,
+  })
+  lockoutEnabled: boolean;
+
+  @ApiProperty({
+    description: '锁定结束时间',
+    example: true,
+  })
+  @IsDate()
+  lockoutEnd: Date;
+
+  @ApiProperty({
+    description: '已删除',
+    example: true,
+  })
+  deleted: boolean;
 }
