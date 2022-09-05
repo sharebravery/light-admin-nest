@@ -1,4 +1,4 @@
-import { AccountModule } from './modules/account/account.module';
+import { AccountModule } from './modules/system/account/account.module';
 /*
  * @Description: ^_^
  * @Author: sharebravery
@@ -9,7 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { UsersModule } from './modules/users/users.module';
+import { UsersModule } from './modules/system/users/users.module';
 
 @Module({
   imports: [
@@ -24,8 +24,8 @@ import { UsersModule } from './modules/users/users.module';
 })
 export class AppModule {}
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('connected');
-});
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function () {
+//   console.log('connected');
+// });

@@ -7,7 +7,7 @@ import { Module } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { LoginModel, LoginSchema } from './entities/loginModel';
+import { LoginModel, LoginSchema } from './entities/login.entitie';
 
 const AccountTable = MongooseModule.forFeature([
   { name: LoginModel.name, schema: LoginSchema },

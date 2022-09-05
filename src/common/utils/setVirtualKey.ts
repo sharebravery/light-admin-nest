@@ -1,0 +1,31 @@
+/*
+ * @Description: ^_^
+ * @Author: sharebravery
+ * @Date: 2022-09-05 21:51:47
+ */
+import mongoose from 'mongoose';
+
+/**
+ *将_id映射为虚拟Key
+ *
+ * @export
+ * @template T
+ * @param {(T & mongoose.Schema)} schema
+ * @param {string} [key='id']
+ * @return {*}  {T}
+ */
+export default function setVirtualKey<T>(
+  schema: T & mongoose.Schema,
+  key = 'id',
+): T {
+  schema.set('toJSON', {
+    virtuals: true,
+    transform(doc, ret) {
+      ret[key] = ret._id;
+      delete ret._id;
+      delete ret.__v;
+    },
+  });
+
+  return schema;
+}

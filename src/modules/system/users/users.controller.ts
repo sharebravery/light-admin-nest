@@ -11,11 +11,14 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
+  Query,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { IUserParams, UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ObjectId } from 'mongoose';
 
 @ApiTags('UsersController')
 @Controller('users')
@@ -24,20 +27,32 @@ export class UsersController {
 
   @ApiOperation({ summary: '创建用户' })
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  @ApiOperation({ summary: '查找用户' })
+  @ApiQuery({
+    name: 'name',
+    description: '姓名',
+    required: false,
+  })
+  @ApiOperation({ summary: '条件查询' })
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async Find(@Query() params?: IUserParams) {
+    return this.usersService.find(params);
   }
 
+  // @ApiOperation({ summary: '查找用户' })
+  // @Get()
+  // findAll() {
+  //   return this.usersService.findAll();
+  // }
+
+  @ApiParam({ name: 'id' })
   @ApiOperation({ summary: '根据id查找用户' })
   @Get('/findOne/:id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id') id: ObjectId) {
+    return this.usersService.findOne(id);
   }
 
   @ApiOperation({ summary: '更新用户信息' })

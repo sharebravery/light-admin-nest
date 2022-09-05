@@ -8,8 +8,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { Document } from 'mongoose';
 
-@Schema()
-export class LoginModel extends Document {
+// @Schema()
+export class LoginModel {
   @ApiProperty({
     name: 'username',
     type: String,
