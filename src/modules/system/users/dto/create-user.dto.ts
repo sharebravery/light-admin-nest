@@ -22,7 +22,6 @@ import {
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
-import { BaseModel } from 'models/baseModel';
 
 /*
  * @Description: ^_^
@@ -35,7 +34,7 @@ enum Gender {
 }
 
 @Schema()
-export class CreateUserDto extends BaseModel {
+export class CreateUserDto {
   @ApiProperty({ description: '显示的名字', example: '小明' })
   @IsNotEmpty({ message: 'name 不允许为空' })
   @Prop({ required: true })
@@ -123,7 +122,7 @@ export class CreateUserDto extends BaseModel {
   lockoutEnd: Date;
 
   @ApiProperty({
-    description: '已删除',
+    description: '软删除',
     example: false,
   })
   @IsBoolean()

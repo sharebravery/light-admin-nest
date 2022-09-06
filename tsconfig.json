@@ -19,8 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "*": ["src/*"],
-      "common/*": ["src/common/*"],
-      "models/*": ["src/models/*"]
+      "common/*": ["src/common/*"]
     }
   }
 }

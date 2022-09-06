@@ -14,11 +14,26 @@ import {
   Res,
   Query,
 } from '@nestjs/common';
-import { IUserParams, UsersService } from './users.service';
+import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
+import { IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+
+export class IUserParams {
+  @IsString()
+  @IsOptional()
+  username?: string;
+
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsPhoneNumber()
+  @IsOptional()
+  phoneNumber?: number;
+}
 
 @ApiTags('UsersController')
 @Controller('users')
@@ -34,6 +49,16 @@ export class UsersController {
   @ApiQuery({
     name: 'name',
     description: '姓名',
+    required: false,
+  })
+  @ApiQuery({
+    name: ' username',
+    description: '用户名',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'phoneNumber',
+    description: '电话',
     required: false,
   })
   @ApiOperation({ summary: '条件查询' })

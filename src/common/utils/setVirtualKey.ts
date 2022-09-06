@@ -6,7 +6,7 @@
 import mongoose from 'mongoose';
 
 /**
- *将_id映射为虚拟Key
+ *将_id映射为虚拟Key,并不返回__v
  *
  * @export
  * @template T

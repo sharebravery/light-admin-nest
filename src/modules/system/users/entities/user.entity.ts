@@ -7,10 +7,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { Document, ObjectId } from 'mongoose';
 import setVirtualKey from 'common/utils/setVirtualKey';
+import { BaseModel } from 'base/baseModel';
 
 @Schema({ timestamps: true })
-export class User extends CreateUserDto {
+export class User extends CreateUserDto implements BaseModel {
   id: ObjectId;
 }
 
-export const UserSchema = setVirtualKey(SchemaFactory.createForClass(User));
+export const UserSchema = SchemaFactory.createForClass(User);

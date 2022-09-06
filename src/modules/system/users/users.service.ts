@@ -5,16 +5,13 @@
  */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { IsPhoneNumber, IsString } from 'class-validator';
+import { buildQuery } from 'common/models/QueryBuilder';
 import { Model, ObjectId } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-
-export interface IUserParams {
-  username?: string;
-  name?: string;
-  phoneNumber?: number;
-}
+import { IUserParams } from './users.controller';
 
 @Injectable()
 export class UsersService {
@@ -33,8 +30,12 @@ export class UsersService {
   }
 
   async find(params: IUserParams) {
-    const { name, username, phoneNumber } = params;
-    return this.userModel.find({ name: /name/ });
+    const model = this.userModel.find();
+
+    const query = buildQuery(params);
+    if (!query) return query;
+
+    return model.and(query);
   }
 
   findAll() {
