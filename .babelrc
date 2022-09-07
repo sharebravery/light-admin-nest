@@ -5,9 +5,7 @@
       {
         "root": ["./src"],
         "alias": {
-          "src": "./src",
-          "common": "./src/common",
-          "models": "./src/models"
+          "src": "./src"
         }
       }
     ]

@@ -8,14 +8,14 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User, UserSchema } from './entities/user.entity';
 import { MongooseModule } from '@nestjs/mongoose';
-import setVirtualKey from 'common/utils/setVirtualKey';
+import { setVirtualKey } from 'src/common/utils';
 
-const UserTable = MongooseModule.forFeature([
+const UserCollection = MongooseModule.forFeature([
   { name: User.name, schema: setVirtualKey(UserSchema) },
 ]);
 
 @Module({
-  imports: [UserTable],
+  imports: [UserCollection],
   controllers: [UsersController],
   providers: [UsersService],
 })

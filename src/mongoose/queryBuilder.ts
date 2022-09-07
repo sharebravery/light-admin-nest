@@ -4,11 +4,11 @@
  * @Date: 2022-09-06 23:34:53
  */
 import { Schema } from '@nestjs/mongoose';
-import isEmptyObject from 'common/utils/isEmptyObject';
-import omitNullAndUndefined from 'common/utils/omitNullAndUndefined';
+import { Model } from 'mongoose';
+import { isEmptyObject, omitNullAndUndefined } from 'src/common/utils';
 
-export default class QueryBuilder {
-  constructor(private model: typeof Schema) {}
+export default class QueryBuilder<T extends typeof Model> {
+  constructor(private model: T & typeof Model) {}
 }
 
 /**
@@ -25,7 +25,7 @@ export function buildQuery<T>(params: T & object) {
   const exist = omitNullAndUndefined(params);
 
   for (const key in exist) {
-    query.push({ [key.trim()]: exist[key] });
+    query.push({ [key]: exist[key] });
   }
 
   return query;

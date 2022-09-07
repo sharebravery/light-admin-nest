@@ -61,12 +61,11 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: '电话',
-    example: '+86 13123456789',
+    example: 13123456789,
   })
-  @IsPhoneNumber('CN')
   @IsOptional()
   @Prop({ required: false })
-  phoneNumber: string;
+  phoneNumber: number;
 
   @ApiProperty({
     description: '邮箱',

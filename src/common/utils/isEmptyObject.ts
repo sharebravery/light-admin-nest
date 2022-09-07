@@ -10,6 +10,6 @@
  * @param {object} object
  * @return {*}
  */
-export default function isEmptyObject(object: object) {
+export function isEmptyObject(object: object) {
   return Reflect.ownKeys(object).length === 0;
 }

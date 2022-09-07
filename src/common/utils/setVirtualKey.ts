@@ -14,10 +14,7 @@ import mongoose from 'mongoose';
  * @param {string} [key='id']
  * @return {*}  {T}
  */
-export default function setVirtualKey<T>(
-  schema: T & mongoose.Schema,
-  key = 'id',
-): T {
+export function setVirtualKey<T>(schema: T & mongoose.Schema, key = 'id'): T {
   schema.set('toJSON', {
     virtuals: true,
     transform(doc, ret) {

@@ -1,17 +1,18 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-04 17:00:23
- */
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { isEmptyObject } from 'src/common/utils/isEmptyObject';
 import { InjectModel } from '@nestjs/mongoose';
-import { IsPhoneNumber, IsString } from 'class-validator';
-import { buildQuery } from 'common/models/QueryBuilder';
 import { Model, ObjectId } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { IUserParams } from './users.controller';
+import { VUserParams } from './users.controller';
+import { buildQuery } from 'src/mongoose/queryBuilder';
 
 @Injectable()
 export class UsersService {
@@ -20,37 +21,41 @@ export class UsersService {
     private userModel: Model<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(dto: CreateUserDto) {
     try {
-      const model = new this.userModel(createUserDto);
+      const exist = await this.userModel.findOne({ email: dto.email });
+
+      if (!isEmptyObject(exist)) {
+        throw new HttpException('邮箱已注册', HttpStatus.FORBIDDEN);
+      }
+
+      const model = new this.userModel(dto);
       return await model.save();
     } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+      throw new BadRequestException(error);
     }
   }
 
-  async find(params: IUserParams) {
+  async find(params: VUserParams) {
     const model = this.userModel.find();
-
     const query = buildQuery(params);
-    if (!query) return query;
-
+    if (query === null) return [];
     return model.and(query);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findOne(id: ObjectId) {
+    return this.userModel.findById({ _id: id }, { password: 0 });
   }
 
-  findOne(id: ObjectId) {
-    return this.userModel.find({ _id: id });
+  async update(id: ObjectId, dto: UpdateUserDto) {
+    const userInfo = await this.userModel.findOne({ _id: id });
+    if (!userInfo) {
+      throw new NotFoundException('用户不存在');
+    }
+    await this.userModel.updateOne({ _id: id }, { $set: dto });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: ObjectId) {
+    return this.userModel.remove({ _id: id });
   }
 }

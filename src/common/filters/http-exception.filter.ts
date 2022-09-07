@@ -23,13 +23,18 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
 
     response.header('Content-Type', 'application/json; charset=utf-8');
     response.status(status).json({
-      status,
+      code: status,
+      success: status >= 400 ? false : true,
       time: new Date().toISOString(),
       path: request.url,
       error,
       message: message
         ? message
-        : `${status >= 500 ? 'Service Error' : 'Client Error'}`,
+        : `${
+            status >= 500
+              ? '服务器错误（Service Error）'
+              : '客户端错误（Client Error）'
+          }`,
     });
   }
 }
