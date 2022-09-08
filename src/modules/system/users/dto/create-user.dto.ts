@@ -60,12 +60,29 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty({
+    description: '二次输入密码',
+    example: '123456',
+  })
+  @MinLength(6, {
+    message: '密码长度不能小于6位',
+  })
+  @MaxLength(20, {
+    message: '密码长度不能超过20位',
+  })
+  @IsString()
+  @IsNotEmpty({ message: '请再次输入密码' })
+  confirmPassword: string;
+
+  @ApiProperty({
     description: '电话',
     example: 13123456789,
   })
   @IsOptional()
   @Prop({ required: false })
   phoneNumber: number;
+
+  @IsOptional()
+  phoneNumberConfirmed: boolean;
 
   @ApiProperty({
     description: '邮箱',
@@ -75,6 +92,9 @@ export class CreateUserDto {
   @IsEmail()
   @IsOptional()
   email: string;
+
+  @IsOptional()
+  emailConfirmed: boolean;
 
   @ApiProperty({
     description: '性别',

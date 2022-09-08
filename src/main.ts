@@ -26,11 +26,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('软考API')
-    .setDescription('The SoftwareTest API json at')
+    .setTitle('mongodb')
+    .setDescription('The mongodb API json at')
     .setExternalDoc('', ' http://localhost:3000/api-json')
     .setVersion('1.0')
-    .addTag('SoftwareTest')
+    .addTag('mongoose')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

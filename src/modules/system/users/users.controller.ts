@@ -22,8 +22,6 @@ import { ObjectId, Types } from 'mongoose';
 import { IsOptional, IsString } from 'class-validator';
 import { ValidObjectIdPipe } from 'src/common/pipe/valid-object-id.pipe';
 
-const MongoId = Types.ObjectId;
-
 export class VUserParams {
   @IsString()
   @IsOptional()
@@ -65,7 +63,7 @@ export class UsersController {
   })
   @ApiOperation({ summary: '条件查询' })
   @Get()
-  async Find(@Query() params?: VUserParams) {
+  async find(@Query() params?: VUserParams) {
     return this.usersService.find(params);
   }
 

@@ -11,15 +11,15 @@ import { Document } from 'mongoose';
 // @Schema()
 export class LoginModel {
   @ApiProperty({
-    name: 'username',
+    name: 'account',
     type: String,
     description: '账号',
     example: 'admin',
     required: true,
   })
   @Prop({ required: true })
-  @IsNotEmpty({ message: 'username 不允许为空' })
-  username: string;
+  @IsNotEmpty({ message: 'account 不允许为空' })
+  account: string;
 
   @ApiProperty({
     name: 'password',

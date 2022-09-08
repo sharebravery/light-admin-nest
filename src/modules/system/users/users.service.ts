@@ -13,6 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { VUserParams } from './users.controller';
 import { buildQuery } from 'src/mongoose/queryBuilder';
+import { makeSalt, encryptPassword } from 'src/common/utils/cryptogram';
 
 @Injectable()
 export class UsersService {
@@ -23,14 +24,26 @@ export class UsersService {
 
   async create(dto: CreateUserDto) {
     try {
+      if (dto.password !== dto.confirmPassword) {
+        throw new NotFoundException('两次输入的密码不一致，请检查');
+      }
+
       const exist = await this.userModel.findOne({ email: dto.email });
 
-      if (!isEmptyObject(exist)) {
+      if (exist) {
         throw new HttpException('邮箱已注册', HttpStatus.FORBIDDEN);
       }
 
+      const salt = makeSalt();
+      const passwordHash = encryptPassword(dto.password, salt);
+
       const model = new this.userModel(dto);
-      return await model.save();
+      model.password = passwordHash;
+      model.salt = salt;
+
+      const user = await model.save();
+
+      return user.id;
     } catch (error) {
       throw new BadRequestException(error);
     }
