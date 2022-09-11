@@ -1,9 +1,3 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-06 23:22:12
- */
-
 import { isEmptyObject } from './isEmptyObject';
 
 /**

@@ -13,6 +13,9 @@ import {
   Delete,
   Query,
   BadRequestException,
+  UseGuards,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -21,7 +24,7 @@ import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ObjectId, Types } from 'mongoose';
 import { IsOptional, IsString } from 'class-validator';
 import { ValidObjectIdPipe } from 'src/common/pipe/valid-object-id.pipe';
-
+import { AuthGuard } from '@nestjs/passport';
 export class VUserParams {
   @IsString()
   @IsOptional()
@@ -35,6 +38,7 @@ export class VUserParams {
   phoneNumber?: number;
 }
 
+// @UseGuards(AuthGuard('jwt'))
 @ApiTags('UsersController')
 @Controller('users')
 export class UsersController {

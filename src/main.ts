@@ -31,6 +31,7 @@ async function bootstrap() {
     .setExternalDoc('', ' http://localhost:3000/api-json')
     .setVersion('1.0')
     .addTag('mongoose')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

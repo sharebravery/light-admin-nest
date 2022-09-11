@@ -1,8 +1,3 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-05 21:51:47
- */
 import mongoose from 'mongoose';
 
 /**

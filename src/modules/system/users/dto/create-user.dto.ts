@@ -1,8 +1,3 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-04 17:00:23
- */
 import { Prop, Schema } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -10,24 +5,15 @@ import {
   IsEmail,
   MinLength,
   MaxLength,
-  IsMobilePhone,
   IsEnum,
   IsDate,
   IsNotEmpty,
-  IsEmpty,
   IsOptional,
-  IsNumber,
   IsInt,
   IsBoolean,
-  IsPhoneNumber,
   IsString,
 } from 'class-validator';
 
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-03 13:14:06
- */
 enum Gender {
   男,
   女,
@@ -35,16 +21,19 @@ enum Gender {
 
 @Schema()
 export class CreateUserDto {
-  @ApiProperty({ description: '显示的名字', example: '小明' })
-  @IsNotEmpty({ message: 'name 不允许为空' })
-  @Prop({ required: true })
-  name: string;
-
-  @ApiProperty({ description: '实际用户名', example: 'xiaoming' })
+  @ApiProperty({
+    description: '用户名/账户',
+    example: 'sharebravery',
+  })
   @IsString()
   @IsNotEmpty({ message: 'username 不允许为空' })
   @Prop({ required: true })
   username: string;
+
+  @ApiProperty({ description: '显示的名字', example: '小明' })
+  // @IsNotEmpty({ message: 'nickname 不允许为空' })
+  @Prop()
+  nickname: string;
 
   @ApiProperty({ description: '密码', example: '123456' })
   @MinLength(6, {
@@ -55,7 +44,6 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty({ message: 'password 不允许为空' })
-  @IsOptional()
   @Prop({ required: true })
   password: string;
 
@@ -75,11 +63,11 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: '电话',
-    example: 13123456789,
+    example: '13123456789',
   })
   @IsOptional()
   @Prop({ required: false })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @IsOptional()
   phoneNumberConfirmed: boolean;
@@ -91,9 +79,11 @@ export class CreateUserDto {
   })
   @IsEmail()
   @IsOptional()
+  @Prop()
   email: string;
 
   @IsOptional()
+  @Prop()
   emailConfirmed: boolean;
 
   @ApiProperty({
@@ -118,6 +108,7 @@ export class CreateUserDto {
   @ApiProperty({ description: '年龄', example: 18, required: false })
   @IsInt()
   @IsOptional()
+  @Prop()
   age: number;
 
   @ApiProperty({ description: '角色', example: ['admin'], required: false })
@@ -130,6 +121,7 @@ export class CreateUserDto {
   })
   @IsBoolean()
   @IsOptional()
+  @Prop()
   lockoutEnabled: boolean;
 
   @ApiProperty({
@@ -138,13 +130,6 @@ export class CreateUserDto {
   })
   @IsDate()
   @IsOptional()
+  @Prop()
   lockoutEnd: Date;
-
-  @ApiProperty({
-    description: '软删除',
-    example: false,
-  })
-  @IsBoolean()
-  @IsOptional()
-  deleted: boolean;
 }

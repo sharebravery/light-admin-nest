@@ -3,21 +3,18 @@
  * @Author: sharebravery
  * @Date: 2022-09-04 14:48:08
  */
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
-import { Document } from 'mongoose';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-// @Schema()
 export class LoginModel {
   @ApiProperty({
     name: 'account',
     type: String,
-    description: '账号',
+    description: '账号/用户名',
     example: 'admin',
     required: true,
   })
-  @Prop({ required: true })
+  @IsString()
   @IsNotEmpty({ message: 'account 不允许为空' })
   account: string;
 
@@ -29,8 +26,6 @@ export class LoginModel {
     required: true,
   })
   @IsNotEmpty({ message: 'password 不允许为空' })
-  @Prop({ required: true })
+  @IsString()
   password: string;
 }
-
-export const LoginSchema = SchemaFactory.createForClass(LoginModel);

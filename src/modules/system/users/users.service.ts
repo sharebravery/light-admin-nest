@@ -5,7 +5,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { isEmptyObject } from 'src/common/utils/isEmptyObject';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,7 +12,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { VUserParams } from './users.controller';
 import { buildQuery } from 'src/mongoose/queryBuilder';
-import { makeSalt, encryptPassword } from 'src/common/utils/cryptogram';
 
 @Injectable()
 export class UsersService {
@@ -24,26 +22,24 @@ export class UsersService {
 
   async create(dto: CreateUserDto) {
     try {
-      if (dto.password !== dto.confirmPassword) {
+      const { password, confirmPassword, email, username } = dto;
+      if (password !== confirmPassword) {
         throw new NotFoundException('两次输入的密码不一致，请检查');
       }
 
-      const exist = await this.userModel.findOne({ email: dto.email });
+      const existUsername = await this.userModel.findOne({ username });
 
-      if (exist) {
+      const existEmail = await this.userModel.findOne({ email });
+
+      if (existUsername) {
+        throw new HttpException('用户名已存在', HttpStatus.FORBIDDEN);
+      }
+      if (existEmail) {
         throw new HttpException('邮箱已注册', HttpStatus.FORBIDDEN);
       }
 
-      const salt = makeSalt();
-      const passwordHash = encryptPassword(dto.password, salt);
-
-      const model = new this.userModel(dto);
-      model.password = passwordHash;
-      model.salt = salt;
-
-      const user = await model.save();
-
-      return user.id;
+      const res = await new this.userModel(dto).save();
+      return res.id;
     } catch (error) {
       throw new BadRequestException(error);
     }
@@ -52,7 +48,7 @@ export class UsersService {
   async find(params: VUserParams) {
     const model = this.userModel.find();
     const query = buildQuery(params);
-    if (query === null) return [];
+    if (query === null) return model;
     return model.and(query);
   }
 

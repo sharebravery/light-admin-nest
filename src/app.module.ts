@@ -23,9 +23,3 @@ import { UsersModule } from './modules/system/users/users.module';
   providers: [AppService],
 })
 export class AppModule {}
-
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function () {
-//   console.log('connected');
-// });

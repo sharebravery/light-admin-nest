@@ -1,8 +1,3 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-07 00:07:23
- */
 /**
  *判断object对象是否为无属性值
  *

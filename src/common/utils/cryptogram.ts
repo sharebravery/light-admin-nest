@@ -1,7 +1,13 @@
 import * as crypto from 'crypto';
 
+/**
+ *制作盐
+ *
+ * @export
+ * @return {*}  {string}
+ */
 export function makeSalt(): string {
-  return crypto.randomBytes(3).toString('base64');
+  return crypto.randomBytes(16).toString('base64');
 }
 
 /**

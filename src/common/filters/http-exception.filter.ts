@@ -13,12 +13,15 @@ import {
 @Catch()
 export class HttpExceptionFilter<T> implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
+    console.error(exception);
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
-    const status = exception.getStatus();
-    console.error(exception);
-    const exceptionRes: any = exception.getResponse();
+
+    const status =
+      exception?.getStatus === undefined ? 500 : exception?.getStatus();
+    const exceptionRes: any =
+      exception?.getResponse === undefined ? 500 : exception.getResponse();
     const { error, message } = exceptionRes;
 
     response.header('Content-Type', 'application/json; charset=utf-8');
@@ -27,7 +30,7 @@ export class HttpExceptionFilter<T> implements ExceptionFilter {
       success: status >= 400 ? false : true,
       time: new Date().toISOString(),
       path: request.url,
-      error,
+      error: error ?? exception.message,
       message: message
         ? message
         : `${

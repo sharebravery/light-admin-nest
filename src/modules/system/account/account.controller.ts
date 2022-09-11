@@ -1,66 +1,56 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-03 13:13:52
- */
 import {
   Controller,
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
-  NotFoundException,
-  UnauthorizedException,
+  Res,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Model } from 'mongoose';
-import { encryptPassword, validEmail, validPhone } from 'src/common/utils';
-import { User } from '../users/entities/user.entity';
-import { LoginModel } from './entities/login.entitie';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoginModel } from './entities/login.entity';
+import { EXPIRES_IN } from 'src/config/auth';
+import { AccountService } from './account.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('AccountController')
 @Controller('account')
 export class AccountController {
-  constructor(
-    @InjectModel(User.name)
-    private userModel: Model<User>,
-  ) {}
+  constructor(private readonly accountService: AccountService) {}
 
   @ApiOperation({ summary: '登录' })
+  @UseGuards(AuthGuard('local'))
   @Post('SignedIn')
-  async SignedIn(dto: LoginModel) {
-    const { account, password } = dto;
+  async SignedIn(@Body() dto: LoginModel, @Req() req, @Res() res) {
+    /**校验完毕，发放凭证 */
+    const token = await this.accountService.certificate(req.user);
 
-    let user: User = null;
-
-    if (validPhone(account)) {
-      // 手机登录
-      user = await this.userModel.findOne({ phoneNum: account });
-    } else if (validEmail(account)) {
-      // 邮箱
-      user = await this.userModel.findOne({ email: account });
-    } else {
-      // 帐号
-      user = await this.userModel.findOne({ account });
-    }
-
-    if (!user) {
-      throw new NotFoundException('用户不存在');
-    } else {
-      if (user.password !== encryptPassword(password, user.salt)) {
-        throw new NotFoundException('密码错误');
-      }
-
-      if (!user.lockoutEnabled) throw new UnauthorizedException('账户已被锁定');
-    }
+    res.setHeader('x-access-token', token);
+    res.setHeader('x-access-token-expires-in', EXPIRES_IN);
+    res.send({
+      data: {
+        succeeded: true,
+        isLockedOut: false,
+        isNotAllowed: false,
+        requiresTwoFactor: false,
+      },
+      success: true,
+      code: 200,
+      time: new Date().toISOString(),
+      message: '登录成功！',
+    });
   }
 
+  @ApiBearerAuth()
   @ApiOperation({ summary: '获取登录账户信息' })
+  @UseGuards(AuthGuard('jwt'))
   @Get('Me')
-  Me() {
-    return true;
+  Me(@Req() req) {
+    console.log(
+      '%c [  req.user ]-50',
+      'font-size:13px; background:pink; color:#bf2c9f;',
+      req.user,
+    );
+    return req.user;
   }
 }
