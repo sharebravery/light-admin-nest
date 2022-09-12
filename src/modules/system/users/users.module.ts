@@ -7,12 +7,12 @@ import { setVirtualKey } from 'src/common/utils';
 import { JwtStrategy } from '../account/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 
-const UserCollection = MongooseModule.forFeature([
+const collection = MongooseModule.forFeature([
   { name: User.name, schema: setVirtualKey(UserSchema) },
 ]);
 
 @Module({
-  imports: [UserCollection, PassportModule],
+  imports: [collection, PassportModule],
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy],
 })

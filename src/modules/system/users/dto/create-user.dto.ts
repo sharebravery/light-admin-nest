@@ -31,7 +31,6 @@ export class CreateUserDto {
   username: string;
 
   @ApiProperty({ description: '显示的名字', example: '小明' })
-  // @IsNotEmpty({ message: 'nickname 不允许为空' })
   @Prop()
   nickname: string;
 
@@ -111,8 +110,14 @@ export class CreateUserDto {
   @Prop()
   age: number;
 
-  @ApiProperty({ description: '角色', example: ['admin'], required: false })
+  @ApiProperty({
+    description: '角色',
+    example: ['visitor'],
+    required: false,
+    type: Array,
+  })
   @IsOptional()
+  @Prop({ type: Array })
   roles: Array<any>;
 
   @ApiProperty({

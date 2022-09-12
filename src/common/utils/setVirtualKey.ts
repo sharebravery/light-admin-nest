@@ -10,7 +10,18 @@ import mongoose from 'mongoose';
  * @return {*}  {T}
  */
 export function setVirtualKey<T>(schema: T & mongoose.Schema, key = 'id'): T {
+  schema.set('toObject', {
+    getters: true,
+    virtuals: true,
+    transform(doc, ret) {
+      ret[key] = ret._id;
+      delete ret._id;
+      delete ret.__v;
+    },
+  });
+
   schema.set('toJSON', {
+    getters: true,
     virtuals: true,
     transform(doc, ret) {
       ret[key] = ret._id;
