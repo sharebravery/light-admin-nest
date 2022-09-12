@@ -8,6 +8,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { AccountService } from './account.service';
 import { PassportModule } from '@nestjs/passport';
+import { UsersService } from '../users/users.service';
 
 const collection = MongooseModule.forFeature([
   { name: User.name, schema: UserSchema },
@@ -23,7 +24,7 @@ const collection = MongooseModule.forFeature([
     PassportModule,
   ],
   controllers: [AccountController],
-  providers: [AccountService, LocalStrategy, JwtStrategy],
+  providers: [AccountService, LocalStrategy, JwtStrategy, UsersService],
   exports: [JwtModule],
 })
 export class AccountModule {}

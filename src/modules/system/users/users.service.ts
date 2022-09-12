@@ -7,11 +7,11 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
+import { QueryBuilder } from 'src/mongoose/queryBuilder';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { VUserParams } from './users.controller';
-import { buildQuery } from 'src/mongoose/queryBuilder';
 
 @Injectable()
 export class UsersService {
@@ -46,14 +46,13 @@ export class UsersService {
   }
 
   async find(params: VUserParams) {
-    const model = this.userModel.find();
-    const query = buildQuery(params);
-    if (query === null) return model;
-    return model.and(query);
+    const query = new QueryBuilder(params);
+
+    return this.userModel.find(query.$and(), { password: 0, salt: 0 });
   }
 
   async findOne(id: ObjectId) {
-    return this.userModel.findById({ _id: id }, { password: 0 });
+    return this.userModel.findById({ _id: id }, { password: 0, salt: 0 });
   }
 
   async update(id: ObjectId, dto: UpdateUserDto) {

@@ -27,6 +27,7 @@ export class AccountController {
 
     res.setHeader('x-access-token', token);
     res.setHeader('x-access-token-expires-in', EXPIRES_IN);
+
     res.send({
       data: {
         succeeded: true,
