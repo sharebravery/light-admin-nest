@@ -11,8 +11,9 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles, RolesGuard } from './role.guard';
 import { LoginModel } from './schemas/login.schema';
+import { LocalAuthGuard } from 'src/common/guard/local-auth.guard';
+import { Roles, RolesGuard } from 'src/common/guard/role.guard';
 
 @ApiTags('AccountController')
 @Controller('account')
@@ -20,7 +21,7 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @ApiOperation({ summary: '登录' })
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('SignedIn')
   async SignedIn(@Body() dto: LoginModel, @Req() req, @Res() res) {
     /**校验完毕，发放凭证 */
