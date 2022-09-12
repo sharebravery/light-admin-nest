@@ -1,8 +1,3 @@
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-09-04 17:00:23
- */
 import {
   Controller,
   Get,
@@ -12,10 +7,6 @@ import {
   Param,
   Delete,
   Query,
-  BadRequestException,
-  UseGuards,
-  ClassSerializerInterceptor,
-  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';

@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/entities/user.entity';
+import { User } from '../users/schemas/user.schema';
 
 /** 角色装饰器 */
 export const Roles = (...roles: string[]) => SetMetadata('roles', roles);

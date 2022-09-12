@@ -6,8 +6,8 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { validPhone, validEmail, encryptPassword } from 'src/common/utils';
-import { User } from '../users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/schemas/user.schema';
 
 @Injectable()
 export class AccountService {

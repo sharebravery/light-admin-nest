@@ -2,7 +2,6 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SECRET_KEY } from 'src/config/auth';
-import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { ObjectId } from 'mongoose';
 

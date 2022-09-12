@@ -8,11 +8,11 @@ import {
   Req,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { LoginModel } from './entities/login.entity';
 import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles, RolesGuard } from './role.guard';
+import { LoginModel } from './schemas/login.schema';
 
 @ApiTags('AccountController')
 @Controller('account')
