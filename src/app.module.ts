@@ -1,9 +1,4 @@
 import { AccountModule } from './modules/system/account/account.module';
-/*
- * @Description: ^_^
- * @Author: sharebravery
- * @Date: 2022-08-29 19:38:18
- */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
