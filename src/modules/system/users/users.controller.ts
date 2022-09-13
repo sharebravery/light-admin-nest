@@ -14,7 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ObjectId, Types } from 'mongoose';
 import { IsOptional, IsString } from 'class-validator';
-import { ValidObjectIdPipe } from 'src/common/pipe/valid-object-id.pipe';
+import { ValidObjectIdPipe } from 'src/common/pipes/valid-object-id.pipe';
 import { AuthGuard } from '@nestjs/passport';
 export class VUserParams {
   @IsString()

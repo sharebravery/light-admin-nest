@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { RolesGuard } from './common/guards/roles.guard';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
 async function bootstrap() {
@@ -19,6 +20,8 @@ async function bootstrap() {
 
   // 全局数据监测校验管道
   app.useGlobalPipes(new ValidationPipe());
+
+  // app.useGlobalGuards(new RolesGuard());
 
   const config = new DocumentBuilder()
     .setTitle('mongodb')

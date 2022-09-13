@@ -19,4 +19,4 @@ $ pnpm run start:prod
 
 # TODO
 
-[ ] 抽离公共部分以及对 mongoose 和 typeorm 的特殊处理组成核心库
+- [ ] 抽离公共部分以及对 mongoose 和 typeorm 的特殊处理组成核心库

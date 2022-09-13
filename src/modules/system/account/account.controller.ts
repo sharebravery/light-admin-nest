@@ -12,8 +12,10 @@ import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginModel } from './schemas/login.schema';
-import { LocalAuthGuard } from 'src/common/guard/local-auth.guard';
-import { Roles, RolesGuard } from 'src/common/guard/role.guard';
+import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role';
 
 @ApiTags('AccountController')
 @Controller('account')
@@ -46,7 +48,7 @@ export class AccountController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取登录账户信息' })
-  @Roles('admin', 'root')
+  @Roles(Role.Admin)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('Me')
   Me(@Req() req) {

@@ -43,7 +43,13 @@ export class AccountService {
     return user;
   }
 
-  // 生成 token
+  /**
+   *生成 token
+   *
+   * @param {User} user
+   * @return {*}
+   * @memberof AccountService
+   */
   async certificate(user: User) {
     const { id, username, phoneNumber, email } = user;
 
