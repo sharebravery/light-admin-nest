@@ -50,7 +50,7 @@ export class AccountService {
    * @return {*}
    * @memberof AccountService
    */
-  async certificate(user: User) {
+  async getToken(user: User) {
     const { id, username, phoneNumber, email } = user;
 
     const payload = { id, username };
@@ -60,13 +60,23 @@ export class AccountService {
   }
 
   /**
-   * 生成刷新 token
+   *生成刷新 token
+   *
+   * @param {string} id
+   * @return {*}  {string}
+   * @memberof AccountService
    */
   refreshToken(id: string): string {
     return this.jwtService.sign({ id });
   }
 
-  /** 校验 token */
+  /**
+   *校验 token
+   *
+   * @param {string} token
+   * @return {*}  {string}
+   * @memberof AccountService
+   */
   verifyToken(token: string): string {
     try {
       if (!token) return null;

@@ -29,7 +29,7 @@ export class AccountController {
   @Post('SignedIn')
   async SignedIn(@Body() dto: LoginModel, @Req() req, @Res() res) {
     /**校验完毕，发放凭证 */
-    const token = await this.accountService.certificate(req.user);
+    const token = await this.accountService.getToken(req.user);
 
     res.setHeader('x-access-token', token);
     res.setHeader('x-access-token-expires-in', EXPIRES_IN);

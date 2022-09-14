@@ -36,6 +36,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const atUserId = this.accountService.verifyToken(accessToken);
     if (!atUserId)
       throw new UnauthorizedException('当前登录已过期，请重新登录');
+    return this.activate(context);
   }
 
   async activate(context: ExecutionContext): Promise<boolean> {
