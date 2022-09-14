@@ -25,6 +25,6 @@ const collection = MongooseModule.forFeature([
   ],
   controllers: [AccountController],
   providers: [AccountService, LocalStrategy, JwtStrategy, UsersService],
-  exports: [JwtModule],
+  exports: [JwtModule, AccountService],
 })
 export class AccountModule {}

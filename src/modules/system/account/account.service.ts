@@ -58,4 +58,22 @@ export class AccountService {
     const token = this.jwtService.sign(payload);
     return token;
   }
+
+  /**
+   * 生成刷新 token
+   */
+  refreshToken(id: string): string {
+    return this.jwtService.sign({ id });
+  }
+
+  /** 校验 token */
+  verifyToken(token: string): string {
+    try {
+      if (!token) return null;
+      const id = this.jwtService.verify(token.replace('Bearer ', ''));
+      return id;
+    } catch (error) {
+      return null;
+    }
+  }
 }

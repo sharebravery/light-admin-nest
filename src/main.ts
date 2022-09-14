@@ -1,8 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 
@@ -20,8 +22,6 @@ async function bootstrap() {
 
   // 全局数据监测校验管道
   app.useGlobalPipes(new ValidationPipe());
-
-  // app.useGlobalGuards(new RolesGuard());
 
   const config = new DocumentBuilder()
     .setTitle('mongodb')

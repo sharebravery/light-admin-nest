@@ -29,7 +29,6 @@ export class VUserParams {
   phoneNumber?: number;
 }
 
-// @UseGuards(AuthGuard('jwt'))
 @ApiTags('UsersController')
 @Controller('users')
 export class UsersController {

@@ -10,12 +10,10 @@ import { makeSalt, encryptPassword } from 'src/common/utils';
 export class User extends CreateUserDto implements BaseModel {
   id: ObjectId;
 
-  /**
-   *加密盐
-   *
-   * @type {string}
-   * @memberof User
-   */
+  @ApiProperty({
+    description: '加密盐',
+    example: 'iIhjksdHk',
+  })
   @IsString()
   @Prop({ required: true, default: 'salt' })
   salt: string;
@@ -28,6 +26,14 @@ export class User extends CreateUserDto implements BaseModel {
   @IsOptional()
   @Prop()
   deleted: boolean;
+
+  @ApiProperty({
+    description: '客户端IP',
+    example: '',
+  })
+  @IsString()
+  @Prop()
+  clientIp: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

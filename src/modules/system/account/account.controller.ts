@@ -16,6 +16,7 @@ import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role';
+import { AllowAnonymous } from 'src/common/decorators/allow-anonymous.decorator';
 
 @ApiTags('AccountController')
 @Controller('account')
@@ -23,6 +24,7 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @ApiOperation({ summary: '登录' })
+  @AllowAnonymous()
   @UseGuards(LocalAuthGuard)
   @Post('SignedIn')
   async SignedIn(@Body() dto: LoginModel, @Req() req, @Res() res) {
@@ -49,7 +51,6 @@ export class AccountController {
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取登录账户信息' })
   @Roles(Role.Admin)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('Me')
   Me(@Req() req) {
     return req.user;
