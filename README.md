@@ -5,8 +5,8 @@
 - 统一错误处理
 - 使用 swagger
 - 用户管理
-- 权限校验
-- 授权(全局 jwt\角色校验)
+- 权限校验(全局 jwt\角色校验)
+- 授权
 
 ## Installation
 
@@ -29,7 +29,7 @@ $ pnpm run start:prod
 
 ## 使用
 
-## 修改数据库连接 app.module.ts
+### 修改数据库连接 app.module.ts
 
 > mongodb://admin:123456@localhost:27017/soft?authSource=admin
 

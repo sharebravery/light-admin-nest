@@ -12,8 +12,6 @@ import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
 import { LoginModel } from './schemas/login.schema';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role';
 import { AllowAnonymous } from 'src/common/decorators/allow-anonymous.decorator';
 
 @ApiTags('AccountController')
