@@ -1,6 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthGuard, IAuthGuard } from '@nestjs/passport';
 import { User } from 'src/modules/system/users/schemas/user.schema';
 import { ALLOW_ANONYMOUS } from '../decorators/allow-anonymous.decorator';
 import { ROLES_KEY } from '../decorators/roles.decorator';

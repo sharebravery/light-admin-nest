@@ -10,10 +10,8 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
-import { AuthGuard } from '@nestjs/passport';
 import { LoginModel } from './schemas/login.schema';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role';
 import { AllowAnonymous } from 'src/common/decorators/allow-anonymous.decorator';
@@ -50,7 +48,6 @@ export class AccountController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取登录账户信息' })
-  @Roles(Role.Admin)
   @Get('Me')
   Me(@Req() req) {
     return req.user;
