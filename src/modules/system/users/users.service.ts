@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { QueryBuilder } from 'src/mongoose/queryBuilder';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -51,11 +51,11 @@ export class UsersService {
     return this.userModel.find(query.$and(), { password: 0, salt: 0 });
   }
 
-  async findOne(id: ObjectId) {
+  async findOne(id: string) {
     return this.userModel.findById({ _id: id }, { password: 0, salt: 0 });
   }
 
-  async update(id: ObjectId, dto: UpdateUserDto) {
+  async update(id: string, dto: UpdateUserDto) {
     const userInfo = await this.userModel.findOne({ _id: id });
     if (!userInfo) {
       throw new NotFoundException('用户不存在');
@@ -63,7 +63,7 @@ export class UsersService {
     await this.userModel.updateOne({ _id: id }, { $set: dto });
   }
 
-  async remove(id: ObjectId) {
+  async remove(id: string) {
     return this.userModel.remove({ _id: id });
   }
 }

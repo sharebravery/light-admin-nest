@@ -3,8 +3,7 @@
   "version": "0.0.2",
   "description": "",
   "author": "sharebravery",
-  "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT License",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

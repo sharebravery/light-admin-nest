@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SECRET_KEY } from 'src/config/auth';
 import { UsersService } from '../users/users.service';
-import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { id: ObjectId; username: string }) {
+  async validate(payload: { id: string; username: string }) {
     const { id, username } = payload;
 
     const existUser = await this.usersService.findOne(id);

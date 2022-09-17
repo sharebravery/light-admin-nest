@@ -7,12 +7,18 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EXPIRES_IN } from 'src/config/auth';
 import { AccountService } from './account.service';
 import { LoginModel } from './schemas/login.schema';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
 import { AllowAnonymous } from 'src/common/decorators/allow-anonymous.decorator';
+import { User } from '../users/schemas/user.schema';
 
 @ApiTags('AccountController')
 @Controller('account')
@@ -44,6 +50,9 @@ export class AccountController {
     });
   }
 
+  @ApiOkResponse({
+    type: User,
+  })
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取登录账户信息' })
   @Get('Me')

@@ -38,6 +38,7 @@ $ pnpm run start:prod
 - @UseGuards(LocalAuthGuard) (使用 local 一般用于登录接口)
 - @Roles(Role.Admin) 角色
 - @AllowAnonymous() 允许接口不校验 token
+- @ApiPaginatedResponse(User) swagger 分页装饰器
 
 ### Config
 

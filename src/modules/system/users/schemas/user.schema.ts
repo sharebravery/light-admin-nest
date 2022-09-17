@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { Document, ObjectId } from 'mongoose';
 import { BaseModel } from 'src/mongoose/baseModel';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -8,7 +7,7 @@ import { makeSalt, encryptPassword } from 'src/common/utils';
 
 @Schema({ timestamps: true })
 export class User extends CreateUserDto implements BaseModel {
-  id: ObjectId;
+  id: string;
 
   @ApiProperty({
     description: '加密盐',

@@ -23,7 +23,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('mongodb')
     .setDescription('The mongodb API json at')
-    .setExternalDoc('', ' http://localhost:3000/api-json')
+    .setExternalDoc('', ' http://localhost:9527/api-json')
     .setVersion('1.0')
     .addTag('mongoose')
     .addBearerAuth()
@@ -32,9 +32,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   console.log('====================================');
-  console.log('start at:' + 'http://localhost:3000/api');
+  console.log('start at:' + 'http://localhost:9527/api');
   console.log('====================================');
 
-  await app.listen(3000);
+  await app.listen(9527);
 }
 bootstrap();
