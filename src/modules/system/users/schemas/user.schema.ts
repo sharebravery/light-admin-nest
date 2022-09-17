@@ -7,20 +7,27 @@ import { makeSalt, encryptPassword } from 'src/common/utils';
 
 @Schema({ timestamps: true })
 export class User extends CreateUserDto implements BaseModel {
+  @ApiProperty({
+    description: 'ID',
+  })
   id: string;
 
-  @ApiProperty({
-    description: '加密盐',
-    example: 'iIhjksdHk',
-  })
+  /**
+   *加密盐
+   *
+   * @type {string}
+   * @memberof User
+   */
   @IsString()
   @Prop({ required: true, default: 'salt' })
   salt: string;
 
-  @ApiProperty({
-    description: '软删除',
-    example: false,
-  })
+  /**
+   *软删除
+   *
+   * @type {boolean}
+   * @memberof User
+   */
   @IsBoolean()
   @IsOptional()
   @Prop()
@@ -32,7 +39,7 @@ export class User extends CreateUserDto implements BaseModel {
   })
   @IsString()
   @Prop()
-  clientIp: string;
+  IP: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
